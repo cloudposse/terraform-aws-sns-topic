@@ -20,8 +20,8 @@ resource "aws_sns_topic_subscription" "this" {
   protocol               = var.subscribers[each.key].protocol
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
-//  delivery_policy  = var.subscribers[each.key].delivery_policy
-  # delivery_policy - (Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details.
+  # TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
+  # redrive_policy        = length(aws_sqs_queue.dead_letter_queue.*) > 0 ? "{\"deadLetterTargetArn\": \"${join("", aws_sqs_queue.dead_letter_queue.*.arn)}\"}" : null
 }
 
 resource "aws_sns_topic_policy" "this" {
@@ -32,30 +32,52 @@ resource "aws_sns_topic_policy" "this" {
 data "aws_iam_policy_document" "aws_sns_topic_policy" {
   policy_id = "SNSTopicsPub"
   statement {
-    effect = "Allow"
-    actions = ["sns:Publish"]
+    effect    = "Allow"
+    actions   = ["sns:Publish"]
     resources = [aws_sns_topic.this.arn]
 
     principals {
-      type = "Service"
+      type        = "Service"
       identifiers = var.allowed_aws_services_for_sns_published
     }
 
     condition {
       test     = "StringEquals"
       variable = "AWS:Referer"
-      values = [data.aws_caller_identity.current.account_id]
+      values   = [data.aws_caller_identity.current.account_id]
     }
   }
 }
 
 
-# TODO Dead Letter SQS
-## Create SQS
-## Modify redelivery policy for SNS
-## Monitor SQS queue for messages
+# TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
+resource "aws_sqs_queue" "dead_letter_queue" {
+  count = var.sqs_dlq_enabled ? 1 : 0
 
-## The following JSON object is a sample redrive policy, attached to an SNS subscription.
-##{
-##  "deadLetterTargetArn": "arn:aws:sqs:us-east-2:123456789012:MyDeadLetterQueue"
-##}
+  name                      = module.label.id
+  max_message_size          = var.sqs_dlq_max_message_size
+  message_retention_seconds = var.sqs_dlq_message_retention_seconds
+}
+
+data "aws_iam_policy_document" "sqs-queue-policy" {
+  count = var.sqs_dlq_enabled ? 1 : 0
+
+  policy_id = "${join("", aws_sqs_queue.dead_letter_queue.*.arn)}/SNSDeadLetterQueue"
+
+  statement {
+    effect    = "Allow"
+    actions   = ["SQS:SendMessage"]
+    resources = [join("", aws_sqs_queue.dead_letter_queue.*.arn)]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    condition {
+      test     = "ArnEquals"
+      variable = "aws:SourceArn"
+      values   = [aws_sns_topic.this.arn]
+    }
+  }
+}
