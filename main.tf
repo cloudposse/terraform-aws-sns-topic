@@ -12,12 +12,12 @@ resource "aws_sns_topic" "this" {
 }
 
 resource "aws_sns_topic_subscription" "this" {
-  for_each = toset(var.subscribers)
+  for_each = var.subscribers
 
   topic_arn              = aws_sns_topic.this.arn
-  protocol               = lookup(each.value, "protocol", null)
-  endpoint               = lookup(each.value, "endpoint", null)
-  endpoint_auto_confirms = lookup(each.value, "endpoint_auto_confirms", null)
+  protocol               = var.subscribers[each.key].protocol
+  endpoint               = var.subscribers[each.key].endpoint
+  endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
   # delivery_policy  = lookup(each.value, "delivery_policy", null)
   # delivery_policy - (Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details.
 }

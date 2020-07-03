@@ -21,7 +21,7 @@ variable "attributes" {
 }
 
 variable "subscribers" {
-  type = list(object({
+  type = map(object({
     protocol = string
     # The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially supported, see below) (email is an option but is unsupported, see below).
     endpoint = string
@@ -30,7 +30,7 @@ variable "subscribers" {
     # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)
   }))
   description = "Required configuration for subscibres to SNS topic."
-  default     = []
+  default     = {}
 }
 
 variable "monitoring_enabled" {
