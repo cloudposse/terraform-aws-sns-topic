@@ -20,10 +20,6 @@ variable "attributes" {
   default     = []
 }
 
-variable "aws_assume_role_arn" {
-  type = string
-}
-
 variable "subscribers" {
   type = list(object({
     protocol = string

@@ -1,14 +1,3 @@
-terraform {
-  backend "s3" {}
-}
-
-
-provider "aws" {
-  assume_role {
-    role_arn = var.aws_assume_role_arn
-  }
-}
-
 module "label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
   namespace  = var.namespace
