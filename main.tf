@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 module "label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
   namespace  = var.namespace
@@ -18,17 +20,35 @@ resource "aws_sns_topic_subscription" "this" {
   protocol               = var.subscribers[each.key].protocol
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
-  # delivery_policy  = lookup(each.value, "delivery_policy", null)
+//  delivery_policy  = var.subscribers[each.key].delivery_policy
   # delivery_policy - (Optional) JSON String with the delivery policy (retries, backoff, etc.) that will be used in the subscription - this only applies to HTTP/S subscriptions. Refer to the SNS docs for more details.
 }
 
-//module "sns_monitoring" {
-//  source = "git::https://github.com/cloudposse/terraform-aws-sns-cloudwatch-alarms.git?ref=master"
-//  enabled = var.monitoring_enabled
-//
-//  sns_topic_name       = aws_sns_topic.this.name
-//  sns_topic_alarms_arn = var.sns_topic_alarms_arn
-//}
+resource "aws_sns_topic_policy" "this" {
+  arn    = aws_sns_topic.this.arn
+  policy = data.aws_iam_policy_document.aws_sns_topic_policy.json
+}
+
+data "aws_iam_policy_document" "aws_sns_topic_policy" {
+  policy_id = "SNSTopicsPub"
+  statement {
+    effect = "Allow"
+    actions = ["sns:Publish"]
+    resources = [aws_sns_topic.this.arn]
+
+    principals {
+      type = "Service"
+      identifiers = var.allowed_aws_services_for_sns_published
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:Referer"
+      values = [data.aws_caller_identity.current.account_id]
+    }
+  }
+}
+
 
 # TODO Dead Letter SQS
 ## Create SQS

@@ -32,15 +32,8 @@ variable "subscribers" {
   description = "Required configuration for subscibres to SNS topic."
   default     = {}
 }
-
-variable "monitoring_enabled" {
-  type        = bool
-  description = "Flag to enable CloudWatch monitoring of SNS topic."
-  default     = false
-}
-
-variable "sns_topic_alarms_arn" {
-  type        = string
-  description = "ARN of SNS topic that will be subscribed to an alarm."
-  default     = null
+variable "allowed_aws_services_for_sns_published" {
+  type        = list(string)
+  description = "AWS services that will have permission to publish to SNS topic"
+  default     = ["cloudwatch.amazonaws.com"]
 }
