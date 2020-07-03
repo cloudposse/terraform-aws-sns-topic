@@ -1,0 +1,67 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-sns-topic
+
+# Tags of this project
+tags:
+  - aws
+  - terraform
+  - terraform-modules
+  - sns
+
+# Categories of this project
+categories:
+  - terraform-modules/notification
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-sns-topic
+
+# Badges to display
+badges:
+  - name: GitHub Action Build Status
+    image: https://github.com/cloudposse/terraform-aws-sns-topic/workflows/Chatops/badge.svg?branch=master
+    url: https://github.com/cloudposse/terraform-aws-sns-topic/actions?query=workflow%3Achatops
+  - name: Latest Release
+    image: https://img.shields.io/github/release/cloudposse/terraform-aws-sns-topic.svg
+    url: https://github.com/cloudposse/terraform-aws-sns-topic/releases/latest
+  - name: Slack Community
+    image: https://slack.cloudposse.com/badge.svg
+    url: https://slack.cloudposse.com
+
+# Short description of this project
+description: |-
+  Terraform module to provision SNS topic
+
+# How to use this project
+usage: |-
+  # TODO
+
+
+# Example usage
+#examples: |-
+#  Example goes here...
+
+# How to get started quickly
+#quickstart: |-
+#  Here's how to get started...
+
+# Other files to include in this README from the project folder
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Marcin Brański"
+    github: "3h4x"
