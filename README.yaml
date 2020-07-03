@@ -44,13 +44,46 @@ description: |-
   Terraform module to provision SNS topic
 
 # How to use this project
-usage: |-
-  # TODO
+introduction: |-
+  This module provides:
+  - SNS topic creation
+  - SNS topic policy
+  - SNS topic subscriptions
 
+  It's possible to subscribe SQS as Dead Letter Queue.
+  **Unfortunately** `redrive_policy` is not yet available in `terraform`. It's waiting for PR https://github.com/terraform-providers/terraform-provider-aws/pull/11770
+  Without `redrive_policy` it's impossible to configure DLQ.
+
+usage: |-
+  Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+  [SNS documentation](https://docs.aws.amazon.com/sns/latest/dg/sns-how-it-works.html)
+
+  There are many ways SNS can be used. As an example we can imagine CloudWatch sending alerts to SNS, by using subscribers such notifications
+  can be sent further to PagerDuty, OpsGenie or any other oncall management tool.
 
 # Example usage
-#examples: |-
-#  Example goes here...
+examples: |-
+  ```
+  module "sns" {
+    source = "git::https://github.com/cloudposse/terraform-aws-sns-topic.git?ref=0.0.1"
+
+    attributes = var.attributes
+    name       = var.name
+    namespace  = var.namespace
+    stage      = var.stage
+
+  subscribers = {
+    opsgenie = {
+      protocol = "https"
+      endpoint = "https://api.example.com/v1/"
+      endpoint_auto_confirms = true
+    }
+  }
+
+  monitoring_enabled = true
+  sqs_dlq_enabled    = false
+  }
+  ```
 
 # How to get started quickly
 #quickstart: |-

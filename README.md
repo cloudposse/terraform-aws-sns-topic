@@ -42,7 +42,7 @@
 
 [![Cloud Posse][logo]](https://cpco.io/homepage)
 
-# terraform-aws-sns-topic [![Github Build Status](https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-ses?type=cf-1)](https://g.codefresh.io/public/accounts/cloudposse/pipelines/5ebae393e10f523310441203) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-ses.svg)](https://github.com/cloudposse/terraform-aws-ses/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# terraform-aws-sns-topic [![GitHub Action Build Status](https://github.com/cloudposse/terraform-aws-sns-topic/workflows/Chatops/badge.svg?branch=master)](https://github.com/cloudposse/terraform-aws-sns-topic/actions?query=workflow%3Achatops) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-sns-topic.svg)](https://github.com/cloudposse/terraform-aws-sns-topic/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
 Terraform module to provision SNS topic
@@ -78,6 +78,16 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 
 
+## Introduction
+
+This module provides:
+- SNS topic creation
+- SNS topic policy
+- SNS topic subscriptions
+
+It's possible to subscribe SQS as Dead Letter Queue.
+**Unfortunately** `redrive_policy` is not yet available in `terraform`. It's waiting for PR https://github.com/terraform-providers/terraform-provider-aws/pull/11770
+Without `redrive_policy` it's impossible to configure DLQ.
 
 ## Usage
 
@@ -86,10 +96,38 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-sns-topic/releases).
 
 
-# TODO
+Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+[SNS documentation](https://docs.aws.amazon.com/sns/latest/dg/sns-how-it-works.html)
+
+There are many ways SNS can be used. As an example we can imagine CloudWatch sending alerts to SNS, by using subscribers such notifications
+can be sent further to PagerDuty, OpsGenie or any other oncall management tool.
 
 
 
+
+## Examples
+
+```
+module "sns" {
+  source = "git::https://github.com/cloudposse/terraform-aws-sns-topic.git?ref=0.0.1"
+
+  attributes = var.attributes
+  name       = var.name
+  namespace  = var.namespace
+  stage      = var.stage
+
+subscribers = {
+  opsgenie = {
+    protocol = "https"
+    endpoint = "https://api.example.com/v1/"
+    endpoint_auto_confirms = true
+  }
+}
+
+monitoring_enabled = true
+sqs_dlq_enabled    = false
+}
+```
 
 
 
@@ -120,14 +158,15 @@ Available targets:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| allowed\_aws\_services\_for\_sns\_published | AWS services that will have permission to publish to SNS topic | `list(string)` | <pre>[<br>  "cloudwatch.amazonaws.com"<br>]</pre> | no |
 | attributes | Additional attributes to distinguish this SNS topic | `list(string)` | `[]` | no |
-| aws\_assume\_role\_arn | n/a | `string` | n/a | yes |
-| monitoring\_enabled | Flag to enable CloudWatch monitoring of SNS topic. | `bool` | `false` | no |
 | name | Name to distinguish this SNS topic | `string` | `"sns"` | no |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | `string` | n/a | yes |
-| sns\_topic\_alarms\_arn | ARN of SNS topic that will be subscribed to an alarm. | `string` | `null` | no |
+| sqs\_dlq\_enabled | Enable delivery of failed notifications to SQS and monitor messages in queue. | `bool` | `false` | no |
+| sqs\_dlq\_max\_message\_size | The limit of how many bytes a message can contain before Amazon SQS rejects it. An integer from 1024 bytes (1 KiB) up to 262144 bytes (256 KiB). The default for this attribute is 262144 (256 KiB). | `number` | `262144` | no |
+| sqs\_dlq\_message\_retention\_seconds | The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days). | `number` | `1209600` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | `string` | n/a | yes |
-| subscribers | Required configuration for subscibres to SNS topic. | <pre>list(object({<br>    protocol = string<br>    # The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially supported, see below) (email is an option but is unsupported, see below).<br>    endpoint = string<br>    # The endpoint to send data to, the contents will vary with the protocol. (see below for more information)<br>    endpoint_auto_confirms = bool<br>    # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)<br>  }))</pre> | `[]` | no |
+| subscribers | Required configuration for subscibres to SNS topic. | <pre>map(object({<br>    protocol = string<br>    # The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially supported, see below) (email is an option but is unsupported, see below).<br>    endpoint = string<br>    # The endpoint to send data to, the contents will vary with the protocol. (see below for more information)<br>    endpoint_auto_confirms = bool<br>    # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)<br>  }))</pre> | `{}` | no |
 
 ## Outputs
 
