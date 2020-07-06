@@ -42,7 +42,7 @@
 
 [![Cloud Posse][logo]](https://cpco.io/homepage)
 
-# terraform-aws-sns-topic [![GitHub Action Build Status](https://github.com/cloudposse/terraform-aws-sns-topic/workflows/Chatops/badge.svg?branch=master)](https://github.com/cloudposse/terraform-aws-sns-topic/actions?query=workflow%3Achatops) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-sns-topic.svg)](https://github.com/cloudposse/terraform-aws-sns-topic/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# terraform-aws-sns-topic [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-sns-topic.svg)](https://github.com/cloudposse/terraform-aws-sns-topic/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
 Terraform module to provision SNS topic
@@ -175,6 +175,27 @@ Available targets:
 | aws\_sns\_topic\_subscription | n/a |
 | sns\_topic | n/a |
 
+
+
+
+## Share the Love 
+
+Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-aws-sns-topic)! (it helps us **a lot**) 
+
+Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
+
+
+## Related Projects
+
+Check out these related projects.
+
+- [terraform-aws-sns-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-sns-cloudwatch-sns-alarms) - Terraform module that configures CloudWatch SNS alerts for SNS
+- [terraform-aws-ecs-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms) - Terraform module that configures CloudWatch SNS alerts for ECS
+- [terraform-aws-efs-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-efs-cloudwatch-sns-alarms) - Terraform module that configures CloudWatch SNS alerts for EFS
+- [terrform-aws-elasticache-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-elasticache-cloudwatch-sns-alarms) - Terraform module that configures CloudWatch SNS alerts for ElastiCache
+- [terraform-aws-lambda-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-lambda-cloudwatch-sns-alarms) - Terraform module for creating a set of Lambda alarms and outputting to an endpoint
+- [terraform-aws-rds-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms) - Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic
+- [terraform-aws-sqs-cloudwatch-sns-alarms](https://github.com/cloudposse/terraform-aws-sqs-cloudwatch-sns-alarms) - Terraform module for creating alarms for SQS and notifying endpoints
 
 
 
