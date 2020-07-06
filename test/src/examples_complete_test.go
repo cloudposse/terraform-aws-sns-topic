@@ -42,9 +42,4 @@ func TestExamplesComplete(t *testing.T) {
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
-
-	// Run `terraform output` to get the value of an output variable
-	snsTopic := terraform.Output(t, terraformOptions, "sns_topic")
-	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-sns", snsTopic.name)
 }
