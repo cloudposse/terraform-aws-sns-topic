@@ -33,5 +33,3 @@ jobs:
           permission: none
           issue-type: pull-request
           reactions: false
-
-

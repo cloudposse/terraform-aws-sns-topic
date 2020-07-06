@@ -107,7 +107,7 @@ can be sent further to PagerDuty, OpsGenie or any other oncall management tool.
 
 ## Examples
 
-```
+```hcl
 module "sns" {
   source = "git::https://github.com/cloudposse/terraform-aws-sns-topic.git?ref=0.0.1"
 
@@ -116,16 +116,15 @@ module "sns" {
   namespace  = var.namespace
   stage      = var.stage
 
-subscribers = {
-  opsgenie = {
-    protocol = "https"
-    endpoint = "https://api.example.com/v1/"
-    endpoint_auto_confirms = true
+  subscribers = {
+    opsgenie = {
+      protocol = "https"
+      endpoint = "https://api.example.com/v1/"
+      endpoint_auto_confirms = true
+    }
   }
-}
 
-monitoring_enabled = true
-sqs_dlq_enabled    = false
+  sqs_dlq_enabled = false
 }
 ```
 
