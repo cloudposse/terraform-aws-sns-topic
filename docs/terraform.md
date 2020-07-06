@@ -29,6 +29,6 @@
 
 | Name | Description |
 |------|-------------|
-| aws\_sns\_topic\_subscription | n/a |
-| sns\_topic | n/a |
+| aws\_sns\_topic\_subscriptions | SNS topic subscriptions |
+| sns\_topic | SNS topic |
 
