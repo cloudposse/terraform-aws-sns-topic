@@ -46,5 +46,5 @@ func TestExamplesComplete(t *testing.T) {
 	// Run `terraform output` to get the value of an output variable
 	snsTopic := terraform.Output(t, terraformOptions, "sns_topic")
 	// Verify we're getting back the outputs we expect
-	assert.Equal(t, "eg-test-sns", snsTopic)
+	assert.Equal(t, "eg-test-sns", snsTopic.name)
 }
