@@ -1,0 +1,125 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-sns-topic
+
+# Tags of this project
+tags:
+  - aws
+  - terraform
+  - terraform-modules
+  - sns
+
+# Categories of this project
+categories:
+  - terraform-modules/notification
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-sns-topic
+
+# Badges to display
+badges:
+  - name: Latest Release
+    image: https://img.shields.io/github/release/cloudposse/terraform-aws-sns-topic.svg
+    url: https://github.com/cloudposse/terraform-aws-sns-topic/releases/latest
+  - name: Slack Community
+    image: https://slack.cloudposse.com/badge.svg
+    url: https://slack.cloudposse.com
+
+# Short description of this project
+description: |-
+  Terraform module to provision SNS topic
+
+# How to use this project
+introduction: |-
+  This module provides:
+  - SNS topic creation
+  - SNS topic policy
+  - SNS topic subscriptions
+
+  It's possible to subscribe SQS as Dead Letter Queue.
+  **Unfortunately** `redrive_policy` is not yet available in `terraform`. It's waiting for PR https://github.com/terraform-providers/terraform-provider-aws/pull/11770
+  Without `redrive_policy` it's impossible to configure DLQ.
+
+usage: |-
+  Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+  [SNS documentation](https://docs.aws.amazon.com/sns/latest/dg/sns-how-it-works.html)
+
+  There are many ways SNS can be used. As an example we can imagine CloudWatch sending alerts to SNS, by using subscribers such notifications
+  can be sent further to PagerDuty, OpsGenie or any other oncall management tool.
+
+# Example usage
+examples: |-
+  ```hcl
+  module "sns" {
+    source = "git::https://github.com/cloudposse/terraform-aws-sns-topic.git?ref=0.0.1"
+
+    attributes = var.attributes
+    name       = var.name
+    namespace  = var.namespace
+    stage      = var.stage
+
+    subscribers = {
+      opsgenie = {
+        protocol = "https"
+        endpoint = "https://api.example.com/v1/"
+        endpoint_auto_confirms = true
+      }
+    }
+
+    sqs_dlq_enabled = false
+  }
+  ```
+
+# How to get started quickly
+#quickstart: |-
+#  Here's how to get started...
+
+# Other files to include in this README from the project folder
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+related:
+  - name: "terraform-aws-sns-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for SNS"
+    url: "https://github.com/cloudposse/terraform-aws-sns-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-ecs-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for ECS"
+    url: "https://github.com/cloudposse/terraform-aws-ecs-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-efs-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for EFS"
+    url: "https://github.com/cloudposse/terraform-aws-efs-cloudwatch-sns-alarms"
+
+  - name: "terrform-aws-elasticache-cloudwatch-sns-alarms"
+    description: "Terraform module that configures CloudWatch SNS alerts for ElastiCache"
+    url: "https://github.com/cloudposse/terraform-aws-elasticache-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-lambda-cloudwatch-sns-alarms"
+    description: "Terraform module for creating a set of Lambda alarms and outputting to an endpoint"
+    url: "https://github.com/cloudposse/terraform-aws-lambda-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-rds-cloudwatch-sns-alarms"
+    description: "Terraform module that configures important RDS alerts using CloudWatch and sends them to an SNS topic"
+    url: "https://github.com/cloudposse/terraform-aws-rds-cloudwatch-sns-alarms"
+
+  - name: "terraform-aws-sqs-cloudwatch-sns-alarms"
+    description: "Terraform module for creating alarms for SQS and notifying endpoints"
+    url: "https://github.com/cloudposse/terraform-aws-sqs-cloudwatch-sns-alarms"
+
+# Contributors to this project
+contributors:
+  - name: "Marcin Brański"
+    github: "3h4x"
