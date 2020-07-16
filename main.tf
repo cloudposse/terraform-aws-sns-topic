@@ -26,7 +26,7 @@ resource "aws_sns_topic_subscription" "this" {
 
 resource "aws_sns_topic_policy" "this" {
   arn    = aws_sns_topic.this.arn
-  policy = data.aws_iam_policy_document.aws_sns_topic_policy.json
+  policy = length(var.sns_topic_policy_json) > 0 ? var.sns_topic_policy_json : data.aws_iam_policy_document.aws_sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "aws_sns_topic_policy" {
@@ -39,12 +39,6 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
     principals {
       type        = "Service"
       identifiers = var.allowed_aws_services_for_sns_published
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "AWS:Referer"
-      values   = [data.aws_caller_identity.current.account_id]
     }
   }
 }

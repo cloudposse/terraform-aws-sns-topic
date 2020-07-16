@@ -35,8 +35,14 @@ variable "subscribers" {
 
 variable "allowed_aws_services_for_sns_published" {
   type        = list(string)
-  description = "AWS services that will have permission to publish to SNS topic"
+  description = "AWS services that will have permission to publish to SNS topic. Used when no external json policy is used."
   default     = ["cloudwatch.amazonaws.com"]
+}
+
+variable "sns_topic_policy_json" {
+  type        = string
+  description = "The fully-formed AWS policy as JSON"
+  default     = ""
 }
 
 # Enabling sqs_dlq_enabled won't be effective.
