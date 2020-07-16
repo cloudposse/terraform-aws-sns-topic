@@ -40,12 +40,6 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
       type        = "Service"
       identifiers = var.allowed_aws_services_for_sns_published
     }
-
-    condition {
-      test     = "StringEquals"
-      variable = "AWS:Referer"
-      values   = [data.aws_caller_identity.current.account_id]
-    }
   }
 }
 
