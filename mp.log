@@ -1,0 +1,7 @@
+Cloning https://github.com/cloudposse/build-harness.git#master...
+Installing packages 0.133.0...
+mkdir -p /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/vendor
+curl --retry 3 --retry-delay 5 --fail -sSL -o /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/vendor/gomplate https://github.com/hairyhenderson/gomplate/releases/download/v3.7.0/gomplate_darwin-amd64-slim && chmod +x /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/vendor/gomplate
+mkdir -p /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/vendor
+curl --retry 3 --retry-delay 5 --fail -sSL -o /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/vendor/terraform-docs https://github.com/segmentio/terraform-docs/releases/download/v0.9.1/terraform-docs-v0.9.1-darwin-amd64 && chmod +x /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/vendor/terraform-docs
+Generated README.md from /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/templates/README.md.gotmpl using data from /Users/marcinbranski/workspace/test/2020-08-25-rebuild-readme/mp/terraform-aws-sns-topic/plan/planned/build-harness/templates/README.yaml
