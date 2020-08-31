@@ -1,3 +1,4 @@
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
@@ -33,3 +34,4 @@
 | aws\_sns\_topic\_subscriptions | SNS topic subscriptions |
 | sns\_topic | SNS topic |
 
+<!-- markdownlint-restore -->
