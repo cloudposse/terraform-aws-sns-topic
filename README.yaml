@@ -81,10 +81,6 @@ examples: |-
   }
   ```
 
-# How to get started quickly
-#quickstart: |-
-#  Here's how to get started...
-
 # Other files to include in this README from the project folder
 include:
   - "docs/targets.md"
