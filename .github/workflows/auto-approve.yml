@@ -11,5 +11,5 @@ jobs:
           contains(github.event.pull_request.labels.*.name, 'auto-approve') && github.event.pull_request.head.repo.full_name == github.repository
         with:
           test1: ${{ contains(github.event.pull_request.labels.*.name, 'auto-approve') }}
-          test2: ${{ github.event.pull_request.head.repo.full_name }}
+          test2: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
