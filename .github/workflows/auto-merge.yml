@@ -1,19 +1,6 @@
 name: Auto merge
 
 on:
-  pull_request:
-    types:
-      - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
-  pull_request_review:
-    types:
-      - submitted
   check_suite:
     types:
       - completed
@@ -23,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: cloudposse/actions/github/auto-merge@0.18.0
-        if: |
-          contains(github.event.pull_request.labels.*.name, 'auto-merge')
+        if: >-
+          github.event.pull_request.head.repo.full_name == github.repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_LABELS: auto-merge,!wip
