@@ -58,7 +58,6 @@ usage: |-
   There are many ways SNS can be used. As an example we can imagine CloudWatch sending alerts to SNS, by using subscribers such notifications
   can be sent further to PagerDuty, OpsGenie or any other oncall management tool.
 
-# Example usage
 examples: |-
   ```hcl
   module "sns" {
