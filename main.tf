@@ -40,6 +40,11 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
       type        = "Service"
       identifiers = var.allowed_aws_services_for_sns_published
     }
+
+    principals {
+      type        = "AWS"
+      identifiers = var.allowed_iam_arns_for_sns_publish
+    }
   }
 }
 
