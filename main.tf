@@ -218,6 +218,11 @@ resource "aws_s3_bucket" "default" {
         }
       }
     }
+
+    principals {
+      type        = "AWS"
+      identifiers = var.allowed_iam_arns_for_sns_publish
+    }
   }
 }
 
