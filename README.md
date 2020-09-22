@@ -143,6 +143,7 @@ Available targets:
 | allowed\_aws\_services\_for\_sns\_published | AWS services that will have permission to publish to SNS topic. Used when no external json policy is used. | `list(string)` | <pre>[<br>  "cloudwatch.amazonaws.com"<br>]</pre> | no |
 | allowed\_iam\_arns\_for\_sns\_publish | IAM role/user ARNs that will have permission to publish to SNS topic. Used when no external json policy is used. | `list(string)` | `[]` | no |
 | attributes | Additional attributes to distinguish this SNS topic | `list(string)` | `[]` | no |
+| kms\_master\_key\_id | The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK | `string` | `null` | no |
 | name | Name to distinguish this SNS topic | `string` | `"sns"` | no |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | `string` | n/a | yes |
 | sns\_topic\_policy\_json | The fully-formed AWS policy as JSON | `string` | `""` | no |

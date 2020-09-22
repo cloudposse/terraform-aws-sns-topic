@@ -39,6 +39,12 @@ variable "allowed_aws_services_for_sns_published" {
   default     = ["cloudwatch.amazonaws.com"]
 }
 
+variable "kms_master_key_id" {
+  type        = string
+  description = "The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK"
+  default     = null
+}
+
 variable "allowed_iam_arns_for_sns_publish" {
   type        = list(string)
   description = "IAM role/user ARNs that will have permission to publish to SNS topic. Used when no external json policy is used."

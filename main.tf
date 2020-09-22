@@ -9,8 +9,9 @@ module "label" {
 }
 
 resource "aws_sns_topic" "this" {
-  name         = module.label.id
-  display_name = module.label.id
+  name              = module.label.id
+  display_name      = module.label.id
+  kms_master_key_id = var.kms_master_key_id
 }
 
 resource "aws_sns_topic_subscription" "this" {
