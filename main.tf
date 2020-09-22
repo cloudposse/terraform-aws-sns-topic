@@ -41,6 +41,15 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
       type        = "Service"
       identifiers = var.allowed_aws_services_for_sns_published
     }
+
+    # don't add the IAM ARNs unless specified
+    dynamic principals {
+      for_each = length(var.allowed_iam_arns_for_sns_publish) > 0 ? ["_enable"] : []
+      content {
+        type        = "AWS"
+        identifiers = var.allowed_iam_arns_for_sns_publish
+      }
+    }
   }
 }
 
