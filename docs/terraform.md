@@ -17,6 +17,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | allowed\_aws\_services\_for\_sns\_published | AWS services that will have permission to publish to SNS topic. Used when no external json policy is used. | `list(string)` | <pre>[<br>  "cloudwatch.amazonaws.com"<br>]</pre> | no |
+| allowed\_iam\_arns\_for\_sns\_publish | IAM role/user ARNs that will have permission to publish to SNS topic. Used when no external json policy is used. | `list(string)` | `[]` | no |
 | attributes | Additional attributes to distinguish this SNS topic | `list(string)` | `[]` | no |
 | name | Name to distinguish this SNS topic | `string` | `"sns"` | no |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | `string` | n/a | yes |

@@ -39,6 +39,12 @@ variable "allowed_aws_services_for_sns_published" {
   default     = ["cloudwatch.amazonaws.com"]
 }
 
+variable "allowed_iam_arns_for_sns_publish" {
+  type        = list(string)
+  description = "IAM role/user ARNs that will have permission to publish to SNS topic. Used when no external json policy is used."
+  default     = []
+}
+
 variable "sns_topic_policy_json" {
   type        = string
   description = "The fully-formed AWS policy as JSON"
