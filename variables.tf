@@ -1,25 +1,3 @@
-variable "namespace" {
-  type        = string
-  description = "Namespace (e.g. `cp` or `cloudposse`)"
-}
-
-variable "stage" {
-  type        = string
-  description = "Stage (e.g. `prod`, `dev`, `staging`)"
-}
-
-variable "name" {
-  type        = string
-  description = "Name to distinguish this SNS topic"
-  default     = "sns"
-}
-
-variable "attributes" {
-  type        = list(string)
-  description = "Additional attributes to distinguish this SNS topic"
-  default     = []
-}
-
 variable "subscribers" {
   type = map(object({
     protocol = string
