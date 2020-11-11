@@ -3,8 +3,7 @@ provider "aws" {
 }
 
 module "sns" {
-  source    = "../../"
-  namespace = var.namespace
-  name      = var.name
-  stage     = var.stage
+  source = "../../"
+
+  context = module.this.context
 }
