@@ -53,3 +53,9 @@ variable "sqs_dlq_message_retention_seconds" {
   description = "The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days)."
   default     = 1209600
 }
+
+variable "delivery_policy" {
+  type        = string
+  description = "The SNS delivery policy as JSON."
+  default     = null
+}
