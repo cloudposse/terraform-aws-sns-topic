@@ -272,3 +272,9 @@ variable "privileged_principal_actions" {
   default     = []
   description = "List of actions to permit `privileged_principal_arns` to perform on bucket and bucket prefixes (see `privileged_principal_arns`)"
 }
+
+variable "delivery_policy" {
+  type        = string
+  description = "The SNS delivery policy as JSON."
+  default     = null
+}
