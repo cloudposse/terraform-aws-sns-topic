@@ -220,7 +220,7 @@ resource "aws_s3_bucket" "default" {
     }
 
     # don't add the IAM ARNs unless specified
-    dynamic principals {
+    dynamic "principals" {
       for_each = length(var.allowed_iam_arns_for_sns_publish) > 0 ? ["_enable"] : []
       content {
         type        = "AWS"
