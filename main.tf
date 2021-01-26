@@ -6,6 +6,7 @@ resource "aws_sns_topic" "this" {
   display_name      = module.this.id
   kms_master_key_id = var.kms_master_key_id
   delivery_policy   = var.delivery_policy
+  tags              = module.this.tags
 }
 
 resource "aws_sns_topic_subscription" "this" {
@@ -58,6 +59,7 @@ resource "aws_sqs_queue" "dead_letter_queue" {
   message_retention_seconds         = var.sqs_dlq_message_retention_seconds
   kms_master_key_id                 = var.sqs_queue_kms_master_key_id
   kms_data_key_reuse_period_seconds = var.sqs_queue_kms_data_key_reuse_period_seconds
+  tags                              = module.this.tags
 }
 
 data "aws_iam_policy_document" "sqs-queue-policy" {
