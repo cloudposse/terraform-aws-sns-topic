@@ -23,6 +23,18 @@ variable "kms_master_key_id" {
   default     = null
 }
 
+variable "sqs_queue_kms_master_key_id" {
+  type        = string
+  description = "The ID of an AWS-managed customer master key (CMK) for Amazon SQS Queue or a custom CMK"
+  default     = null
+}
+
+variable "sqs_queue_kms_data_key_reuse_period_seconds" {
+  type        = number
+  description = "The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again"
+  default     = 300
+}
+
 variable "allowed_iam_arns_for_sns_publish" {
   type        = list(string)
   description = "IAM role/user ARNs that will have permission to publish to SNS topic. Used when no external json policy is used."
