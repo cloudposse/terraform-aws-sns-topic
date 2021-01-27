@@ -26,7 +26,7 @@ variable "kms_master_key_id" {
 variable "sqs_queue_kms_master_key_id" {
   type        = string
   description = "The ID of an AWS-managed customer master key (CMK) for Amazon SQS Queue or a custom CMK"
-  default     = null
+  default     = "alias/aws/sqs"
 }
 
 variable "sqs_queue_kms_data_key_reuse_period_seconds" {

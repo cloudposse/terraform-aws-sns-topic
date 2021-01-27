@@ -50,7 +50,6 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
 
 # TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
 resource "aws_sqs_queue" "dead_letter_queue" {
-  #bridgecrew:skip=BC_AWS_GENERAL_16:Skipping `Encrypt SQS Queue Data` because there is no use in default value, required to pass check
   count = var.sqs_dlq_enabled ? 1 : 0
 
   name                              = module.this.id
