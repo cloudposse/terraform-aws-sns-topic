@@ -20,7 +20,7 @@ variable "allowed_aws_services_for_sns_published" {
 variable "kms_master_key_id" {
   type        = string
   description = "The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK"
-  default     = null
+  default     = "alias/aws/sns"
 }
 
 variable "sqs_queue_kms_master_key_id" {

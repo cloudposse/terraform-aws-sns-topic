@@ -1,7 +1,6 @@
 data "aws_caller_identity" "current" {}
 
 resource "aws_sns_topic" "this" {
-  #bridgecrew:skip=BC_AWS_GENERAL_15:Skipping `Encrypt SNS Topic Data` because there is no use in default value, required to pass check
   name              = module.this.id
   display_name      = module.this.id
   kms_master_key_id = var.kms_master_key_id
