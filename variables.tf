@@ -6,6 +6,8 @@ variable "subscribers" {
     # The endpoint to send data to, the contents will vary with the protocol. (see below for more information)
     endpoint_auto_confirms = bool
     # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)
+    raw_message_delivery = bool
+    # Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property) (default is false)
   }))
   description = "Required configuration for subscibres to SNS topic."
   default     = {}

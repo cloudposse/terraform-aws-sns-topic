@@ -12,6 +12,23 @@
 |------|---------|
 | aws | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| this | cloudposse/label/null | 0.24.1 |
+
+## Resources
+
+| Name |
+|------|
+| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/caller_identity) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/iam_policy_document) |
+| [aws_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sns_topic) |
+| [aws_sns_topic_policy](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sns_topic_policy) |
+| [aws_sns_topic_subscription](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sns_topic_subscription) |
+| [aws_sqs_queue](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sqs_queue) |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -40,7 +57,7 @@
 | sqs\_queue\_kms\_data\_key\_reuse\_period\_seconds | The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again | `number` | `300` | no |
 | sqs\_queue\_kms\_master\_key\_id | The ID of an AWS-managed customer master key (CMK) for Amazon SQS Queue or a custom CMK | `string` | `"alias/aws/sqs"` | no |
 | stage | Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
-| subscribers | Required configuration for subscibres to SNS topic. | <pre>map(object({<br>    protocol = string<br>    # The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially supported, see below) (email is an option but is unsupported, see below).<br>    endpoint = string<br>    # The endpoint to send data to, the contents will vary with the protocol. (see below for more information)<br>    endpoint_auto_confirms = bool<br>    # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)<br>  }))</pre> | `{}` | no |
+| subscribers | Required configuration for subscibres to SNS topic. | <pre>map(object({<br>    protocol = string<br>    # The protocol to use. The possible values for this are: sqs, sms, lambda, application. (http or https are partially supported, see below) (email is an option but is unsupported, see below).<br>    endpoint = string<br>    # The endpoint to send data to, the contents will vary with the protocol. (see below for more information)<br>    endpoint_auto_confirms = bool<br>    # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)<br>    raw_message_delivery = bool<br>    # Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property) (default is false)<br>  }))</pre> | `{}` | no |
 | tags | Additional tags (e.g. `map('BusinessUnit','XYZ')` | `map(string)` | `{}` | no |
 
 ## Outputs
@@ -49,5 +66,4 @@
 |------|-------------|
 | aws\_sns\_topic\_subscriptions | SNS topic subscriptions |
 | sns\_topic | SNS topic |
-
 <!-- markdownlint-restore -->
