@@ -22,12 +22,12 @@
 
 | Name |
 |------|
-| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/caller_identity) |
-| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/data-sources/iam_policy_document) |
-| [aws_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sns_topic) |
-| [aws_sns_topic_policy](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sns_topic_policy) |
-| [aws_sns_topic_subscription](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sns_topic_subscription) |
-| [aws_sqs_queue](https://registry.terraform.io/providers/hashicorp/aws/2.0/docs/resources/sqs_queue) |
+| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) |
+| [aws_sns_topic](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) |
+| [aws_sns_topic_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_policy) |
+| [aws_sns_topic_subscription](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) |
+| [aws_sqs_queue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sqs_queue) |
 
 ## Inputs
 
