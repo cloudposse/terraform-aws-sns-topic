@@ -15,6 +15,7 @@ resource "aws_sns_topic_subscription" "this" {
   protocol               = var.subscribers[each.key].protocol
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
+  raw_message_delivery   = var.subscribers[each.key].raw_message_delivery
   # TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
   # redrive_policy        = length(aws_sqs_queue.dead_letter_queue.*) > 0 ? "{\"deadLetterTargetArn\": \"${join("", aws_sqs_queue.dead_letter_queue.*.arn)}\"}" : null
 }
