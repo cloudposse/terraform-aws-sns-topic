@@ -73,3 +73,10 @@ variable "delivery_policy" {
   description = "The SNS delivery policy as JSON."
   default     = null
 }
+
+variable "kms_encryption_enabled" {
+  type        = bool
+  description = "To enable SNS topic encryption"
+  default     = true
+}
+

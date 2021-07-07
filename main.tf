@@ -3,10 +3,11 @@ data "aws_caller_identity" "current" {}
 resource "aws_sns_topic" "this" {
   name              = module.this.id
   display_name      = module.this.id
-  kms_master_key_id = var.kms_master_key_id
+  kms_master_key_id = var.kms_encryption_enabled ? var.kms_master_key_id : ""
   delivery_policy   = var.delivery_policy
   tags              = module.this.tags
 }
+
 
 resource "aws_sns_topic_subscription" "this" {
   for_each = var.subscribers
