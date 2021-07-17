@@ -16,7 +16,7 @@ variable "subscribers" {
 variable "allowed_aws_services_for_sns_published" {
   type        = list(string)
   description = "AWS services that will have permission to publish to SNS topic. Used when no external json policy is used."
-  default     = ["cloudwatch.amazonaws.com"]
+  default     = []
 }
 
 variable "kms_master_key_id" {
@@ -72,4 +72,16 @@ variable "delivery_policy" {
   type        = string
   description = "The SNS delivery policy as JSON."
   default     = null
+}
+
+variable "fifo_topic" {
+  type        = bool
+  description = "(Optional) Boolean indicating whether or not to create a FIFO (first-in-first-out) topic"
+  default     = false
+}
+
+variable "content_based_deduplication" {
+  type        = bool
+  description = "(Optional) Enables content-based deduplication for FIFO topics"
+  default     = false
 }
