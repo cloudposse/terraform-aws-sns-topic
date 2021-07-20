@@ -15,7 +15,7 @@ variable "subscribers" {
 
 variable "allowed_aws_services_for_sns_published" {
   type        = list(string)
-  description = "AWS services that will have permission to publish to SNS topic. Used when no external json policy is used."
+  description = "AWS services that will have permission to publish to SNS topic. Used when no external JSON policy is used"
   default     = []
 }
 
@@ -76,12 +76,12 @@ variable "delivery_policy" {
 
 variable "fifo_topic" {
   type        = bool
-  description = "(Optional) Boolean indicating whether or not to create a FIFO (first-in-first-out) topic"
+  description = "Whether or not to create a FIFO (first-in-first-out) topic"
   default     = false
 }
 
 variable "content_based_deduplication" {
   type        = bool
-  description = "(Optional) Enables content-based deduplication for FIFO topics"
+  description = "Enable content-based deduplication for FIFO topics"
   default     = false
 }
