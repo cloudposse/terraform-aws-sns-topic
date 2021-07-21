@@ -1,11 +1,13 @@
 data "aws_caller_identity" "current" {}
 
 resource "aws_sns_topic" "this" {
-  name              = module.this.id
-  display_name      = module.this.id
-  kms_master_key_id = var.kms_master_key_id
-  delivery_policy   = var.delivery_policy
-  tags              = module.this.tags
+  name                        = module.this.id
+  display_name                = replace(module.this.id, ".", "-") # dots are illegal in display names and for .fifo topics required as part of the name (AWS SNS by design)
+  kms_master_key_id           = var.kms_master_key_id
+  delivery_policy             = var.delivery_policy
+  tags                        = module.this.tags
+  fifo_topic                  = var.fifo_topic
+  content_based_deduplication = var.content_based_deduplication
 }
 
 resource "aws_sns_topic_subscription" "this" {
@@ -32,9 +34,12 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
     actions   = ["sns:Publish"]
     resources = [aws_sns_topic.this.arn]
 
-    principals {
-      type        = "Service"
-      identifiers = var.allowed_aws_services_for_sns_published
+    dynamic "principals" {
+      for_each = length(var.allowed_aws_services_for_sns_published) > 0 ? ["_enable"] : []
+      content {
+        type        = "Service"
+        identifiers = var.allowed_aws_services_for_sns_published
+      }
     }
 
     # don't add the IAM ARNs unless specified
