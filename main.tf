@@ -1,9 +1,13 @@
 data "aws_caller_identity" "current" {}
 
+locals {
+  kms_key_id = var.use_encryption == true ? coalesce(var.kms_master_key_id, "alias/aws/sns") : ""
+}
+
 resource "aws_sns_topic" "this" {
   name                        = module.this.id
   display_name                = replace(module.this.id, ".", "-") # dots are illegal in display names and for .fifo topics required as part of the name (AWS SNS by design)
-  kms_master_key_id           = var.kms_master_key_id
+  kms_master_key_id           = local.kms_key_id
   delivery_policy             = var.delivery_policy
   tags                        = module.this.tags
   fifo_topic                  = var.fifo_topic

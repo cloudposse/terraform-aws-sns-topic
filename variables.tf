@@ -21,8 +21,14 @@ variable "allowed_aws_services_for_sns_published" {
 
 variable "kms_master_key_id" {
   type        = string
-  description = "The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK"
+  description = "The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK."
   default     = "alias/aws/sns"
+}
+
+variable "use_encryption" {
+  type        = bool
+  description = "Whether to use or not encryption for SNS Topic. If not set to false and no custom value for KMS key (kms_master_key_id) is provided it uses default alias/aws/sns KMS key."
+  default     = true
 }
 
 variable "sqs_queue_kms_master_key_id" {
