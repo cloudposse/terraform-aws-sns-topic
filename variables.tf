@@ -25,9 +25,9 @@ variable "kms_master_key_id" {
   default     = "alias/aws/sns"
 }
 
-variable "use_encryption" {
+variable "encryption_enabled" {
   type        = bool
-  description = "Whether to use or not encryption for SNS Topic. If not set to false and no custom value for KMS key (kms_master_key_id) is provided it uses default alias/aws/sns KMS key."
+  description = "Whether or not to use encryption for SNS Topic. If set to `true` and no custom value for KMS key (kms_master_key_id) is provided, it uses the default `alias/aws/sns` KMS key."
   default     = true
 }
 

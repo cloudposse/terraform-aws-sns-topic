@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 locals {
-  kms_key_id = var.use_encryption == true ? coalesce(var.kms_master_key_id, "alias/aws/sns") : ""
+  kms_key_id = (var.encryption_enabled && var.kms_master_key_id != "") ? var.kms_master_key_id : ""
 }
 
 resource "aws_sns_topic" "this" {
