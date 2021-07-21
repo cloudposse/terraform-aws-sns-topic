@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 module "sns" {
-  source    = "../../"
-  namespace = var.namespace
-  name      = var.name
-  stage     = var.stage
+  source = "../../"
+
+  context                                = module.this.context
+  allowed_aws_services_for_sns_published = var.allowed_aws_services_for_sns_published
 }

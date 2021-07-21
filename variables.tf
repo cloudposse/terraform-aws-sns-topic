@@ -1,25 +1,3 @@
-variable "namespace" {
-  type        = string
-  description = "Namespace (e.g. `cp` or `cloudposse`)"
-}
-
-variable "stage" {
-  type        = string
-  description = "Stage (e.g. `prod`, `dev`, `staging`)"
-}
-
-variable "name" {
-  type        = string
-  description = "Name to distinguish this SNS topic"
-  default     = "sns"
-}
-
-variable "attributes" {
-  type        = list(string)
-  description = "Additional attributes to distinguish this SNS topic"
-  default     = []
-}
-
 variable "subscribers" {
   type = map(object({
     protocol = string
@@ -28,6 +6,8 @@ variable "subscribers" {
     # The endpoint to send data to, the contents will vary with the protocol. (see below for more information)
     endpoint_auto_confirms = bool
     # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)
+    raw_message_delivery = bool
+    # Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property) (default is false)
   }))
   description = "Required configuration for subscibres to SNS topic."
   default     = {}
@@ -35,8 +15,32 @@ variable "subscribers" {
 
 variable "allowed_aws_services_for_sns_published" {
   type        = list(string)
-  description = "AWS services that will have permission to publish to SNS topic. Used when no external json policy is used."
-  default     = ["cloudwatch.amazonaws.com"]
+  description = "AWS services that will have permission to publish to SNS topic. Used when no external JSON policy is used"
+  default     = []
+}
+
+variable "kms_master_key_id" {
+  type        = string
+  description = "The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK"
+  default     = "alias/aws/sns"
+}
+
+variable "sqs_queue_kms_master_key_id" {
+  type        = string
+  description = "The ID of an AWS-managed customer master key (CMK) for Amazon SQS Queue or a custom CMK"
+  default     = "alias/aws/sqs"
+}
+
+variable "sqs_queue_kms_data_key_reuse_period_seconds" {
+  type        = number
+  description = "The length of time, in seconds, for which Amazon SQS can reuse a data key to encrypt or decrypt messages before calling AWS KMS again"
+  default     = 300
+}
+
+variable "allowed_iam_arns_for_sns_publish" {
+  type        = list(string)
+  description = "IAM role/user ARNs that will have permission to publish to SNS topic. Used when no external json policy is used."
+  default     = []
 }
 
 variable "sns_topic_policy_json" {
@@ -62,4 +66,22 @@ variable "sqs_dlq_message_retention_seconds" {
   type        = number
   description = "The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days)."
   default     = 1209600
+}
+
+variable "delivery_policy" {
+  type        = string
+  description = "The SNS delivery policy as JSON."
+  default     = null
+}
+
+variable "fifo_topic" {
+  type        = bool
+  description = "Whether or not to create a FIFO (first-in-first-out) topic"
+  default     = false
+}
+
+variable "content_based_deduplication" {
+  type        = bool
+  description = "Enable content-based deduplication for FIFO topics"
+  default     = false
 }

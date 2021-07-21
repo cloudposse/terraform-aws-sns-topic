@@ -3,17 +3,8 @@ variable "region" {
   description = "AWS region"
 }
 
-variable "name" {
-  type        = string
-  description = "Name  (e.g. `app` or `cluster`)"
-}
-
-variable "namespace" {
-  type        = string
-  description = "Namespace (e.g. `eg` or `cp`)"
-}
-
-variable "stage" {
-  type        = string
-  description = "Stage (e.g. `prod`, `dev`, `staging`, `infra`)"
+variable "allowed_aws_services_for_sns_published" {
+  type        = list(string)
+  description = "AWS services that will have permission to publish to SNS topic. Used when no external JSON policy is used"
+  default     = []
 }
