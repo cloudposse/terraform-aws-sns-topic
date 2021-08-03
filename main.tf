@@ -1,10 +1,14 @@
 data "aws_caller_identity" "current" {}
 
 locals {
-  kms_key_id = (var.encryption_enabled && var.kms_master_key_id != "") ? var.kms_master_key_id : ""
+  enabled = module.this.enabled
+
+  kms_key_id = local.enabled && var.encryption_enabled && var.kms_master_key_id != "" ? var.kms_master_key_id : ""
 }
 
 resource "aws_sns_topic" "this" {
+  count = local.enabled ? 1 : 0
+
   name                        = module.this.id
   display_name                = replace(module.this.id, ".", "-") # dots are illegal in display names and for .fifo topics required as part of the name (AWS SNS by design)
   kms_master_key_id           = local.kms_key_id
@@ -15,9 +19,9 @@ resource "aws_sns_topic" "this" {
 }
 
 resource "aws_sns_topic_subscription" "this" {
-  for_each = var.subscribers
+  for_each = local.enabled ? var.subscribers : {}
 
-  topic_arn              = aws_sns_topic.this.arn
+  topic_arn              = join("", aws_sns_topic.this.*.arn)
   protocol               = var.subscribers[each.key].protocol
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
@@ -27,16 +31,20 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_sns_topic_policy" "this" {
-  arn    = aws_sns_topic.this.arn
-  policy = length(var.sns_topic_policy_json) > 0 ? var.sns_topic_policy_json : data.aws_iam_policy_document.aws_sns_topic_policy.json
+  count = local.enabled ? 1 : 0
+
+  arn    = join("", aws_sns_topic.this.*.arn)
+  policy = length(var.sns_topic_policy_json) > 0 ? var.sns_topic_policy_json : join("", data.aws_iam_policy_document.aws_sns_topic_policy.*.json)
 }
 
 data "aws_iam_policy_document" "aws_sns_topic_policy" {
+  count = local.enabled ? 1 : 0
+
   policy_id = "SNSTopicsPub"
   statement {
     effect    = "Allow"
     actions   = ["sns:Publish"]
-    resources = [aws_sns_topic.this.arn]
+    resources = aws_sns_topic.this.*.arn
 
     dynamic "principals" {
       for_each = length(var.allowed_aws_services_for_sns_published) > 0 ? ["_enable"] : []
@@ -60,7 +68,7 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
 
 # TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
 resource "aws_sqs_queue" "dead_letter_queue" {
-  count = var.sqs_dlq_enabled ? 1 : 0
+  count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
 
   name                              = module.this.id
   max_message_size                  = var.sqs_dlq_max_message_size
@@ -71,7 +79,7 @@ resource "aws_sqs_queue" "dead_letter_queue" {
 }
 
 data "aws_iam_policy_document" "sqs-queue-policy" {
-  count = var.sqs_dlq_enabled ? 1 : 0
+  count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
 
   policy_id = "${join("", aws_sqs_queue.dead_letter_queue.*.arn)}/SNSDeadLetterQueue"
 
@@ -88,7 +96,7 @@ data "aws_iam_policy_document" "sqs-queue-policy" {
     condition {
       test     = "ArnEquals"
       variable = "aws:SourceArn"
-      values   = [aws_sns_topic.this.arn]
+      values   = aws_sns_topic.this.*.arn
     }
   }
 }
