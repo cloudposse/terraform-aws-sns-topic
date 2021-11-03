@@ -4,6 +4,8 @@ locals {
   enabled = module.this.enabled
 
   kms_key_id = local.enabled && var.encryption_enabled && var.kms_master_key_id != "" ? var.kms_master_key_id : ""
+
+  create_iam_policy = module.this.enabled && (length(var.allowed_aws_services_for_sns_published) > 0 || length(var.allowed_iam_arns_for_sns_publish) > 0)
 }
 
 resource "aws_sns_topic" "this" {
@@ -38,7 +40,7 @@ resource "aws_sns_topic_policy" "this" {
 }
 
 data "aws_iam_policy_document" "aws_sns_topic_policy" {
-  count = local.enabled ? 1 : 0
+  count = local.create_iam_policy ? 1 : 0
 
   policy_id = "SNSTopicsPub"
   statement {
