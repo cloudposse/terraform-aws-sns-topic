@@ -13,9 +13,10 @@ resource "aws_sns_topic" "this" {
   display_name                = replace(module.this.id, ".", "-") # dots are illegal in display names and for .fifo topics required as part of the name (AWS SNS by design)
   kms_master_key_id           = local.kms_key_id
   delivery_policy             = var.delivery_policy
-  tags                        = module.this.tags
   fifo_topic                  = var.fifo_topic
   content_based_deduplication = var.content_based_deduplication
+
+  tags = module.this.tags
 }
 
 resource "aws_sns_topic_subscription" "this" {
@@ -65,17 +66,25 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
   }
 }
 
+module "sqs_queue" {
+  source  = "cloudposse/label/null"
+  version = "0.25.0"
 
-# TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
+  regex_replace_chars = "/[^a-zA-Z0-9-.]/"
+
+  context = module.this.context
+}
+
 resource "aws_sqs_queue" "dead_letter_queue" {
   count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
 
-  name                              = module.this.id
+  name                              = module.sqs_queue.id
   max_message_size                  = var.sqs_dlq_max_message_size
   message_retention_seconds         = var.sqs_dlq_message_retention_seconds
   kms_master_key_id                 = var.sqs_queue_kms_master_key_id
   kms_data_key_reuse_period_seconds = var.sqs_queue_kms_data_key_reuse_period_seconds
-  tags                              = module.this.tags
+
+  tags = module.sqs_queue.tags
 }
 
 data "aws_iam_policy_document" "sqs-queue-policy" {
