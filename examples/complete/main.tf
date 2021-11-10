@@ -9,6 +9,7 @@ module "sns" {
 
   sqs_dlq_enabled = true
   fifo_topic      = true
+  fifo_queue      = true
 
   context = module.this.context
 }

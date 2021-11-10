@@ -86,6 +86,12 @@ variable "fifo_topic" {
   default     = false
 }
 
+variable "fifo_queue" {
+  type        = bool
+  description = "Whether or not to create a FIFO (first-in-first-out) queue"
+  default     = false
+}
+
 variable "content_based_deduplication" {
   type        = bool
   description = "Enable content-based deduplication for FIFO topics"
