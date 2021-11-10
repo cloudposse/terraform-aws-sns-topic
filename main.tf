@@ -66,10 +66,11 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
   }
 }
 
-module "sqs_queue" {
+module "sqs_queue_label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
+  # Allow periods in sqs queue because FIFO queues require .fifo suffixed in the name
   regex_replace_chars = "/[^a-zA-Z0-9-.]/"
 
   context = module.this.context
@@ -78,13 +79,13 @@ module "sqs_queue" {
 resource "aws_sqs_queue" "dead_letter_queue" {
   count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
 
-  name                              = module.sqs_queue.id
+  name                              = module.sqs_queue_label.id
   max_message_size                  = var.sqs_dlq_max_message_size
   message_retention_seconds         = var.sqs_dlq_message_retention_seconds
   kms_master_key_id                 = var.sqs_queue_kms_master_key_id
   kms_data_key_reuse_period_seconds = var.sqs_queue_kms_data_key_reuse_period_seconds
 
-  tags = module.sqs_queue.tags
+  tags = module.sqs_queue_label.tags
 }
 
 data "aws_iam_policy_document" "sqs-queue-policy" {
