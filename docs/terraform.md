@@ -16,6 +16,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_sqs_queue"></a> [sqs\_queue](#module\_sqs\_queue) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
