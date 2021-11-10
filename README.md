@@ -170,7 +170,6 @@ Available targets:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_sqs_queue_label"></a> [sqs\_queue\_label](#module\_sqs\_queue\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
