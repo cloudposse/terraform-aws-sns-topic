@@ -5,6 +5,8 @@ locals {
 
   sns_topic_name = var.fifo_topic ? "${module.this.id}.fifo" : module.this.id
   sqs_queue_name = var.fifo_queue ? "${module.this.id}.fifo" : module.this.id
+
+  sqs_dlq_enabled = local.enabled && var.sqs_dlq_enabled
 }
 
 resource "aws_sns_topic" "this" {
@@ -70,7 +72,7 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
 }
 
 resource "aws_sqs_queue" "dead_letter_queue" {
-  count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
+  count = local.sqs_dlq_enabled ? 1 : 0
 
   name                              = local.sqs_queue_name
   fifo_queue                        = var.fifo_queue
@@ -83,7 +85,7 @@ resource "aws_sqs_queue" "dead_letter_queue" {
 }
 
 resource "aws_sqs_queue_policy" "default" {
-  count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
+  count = local.sqs_dlq_enabled ? 1 : 0
 
   queue_url = aws_sqs_queue.dead_letter_queue.*.id
 
@@ -91,7 +93,7 @@ resource "aws_sqs_queue_policy" "default" {
 }
 
 data "aws_iam_policy_document" "sqs_queue_policy" {
-  count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
+  count = local.sqs_dlq_enabled ? 1 : 0
 
   policy_id = "${join("", aws_sqs_queue.dead_letter_queue.*.arn)}/SNSDeadLetterQueue"
 
