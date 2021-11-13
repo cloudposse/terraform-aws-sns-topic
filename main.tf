@@ -91,7 +91,7 @@ resource "aws_sqs_queue" "dead_letter_queue" {
 resource "aws_sqs_queue_policy" "default" {
   count = local.sqs_dlq_enabled ? 1 : 0
 
-  queue_url = aws_sqs_queue.dead_letter_queue.*.id
+  queue_url = join("", aws_sqs_queue.dead_letter_queue.*.id)
 
   policy = join("", data.aws_iam_policy_document.sqs_queue_policy.*.json)
 }
