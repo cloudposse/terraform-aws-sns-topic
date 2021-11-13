@@ -107,6 +107,6 @@ variable "redrive_policy_max_receiver_count" {
 
 variable "redrive_policy" {
   type        = string
-  description = "The SNS redrive policy as JSON. This overrides the deadLetterTargetArn passed by the module."
+  description = "The SNS redrive policy as JSON. This overrides `var.redrive_policy_max_receiver_count` and the `deadLetterTargetArn` (supplied by `var.fifo_queue = true`) passed in by the module."
   default     = null
 }
