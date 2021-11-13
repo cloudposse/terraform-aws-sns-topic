@@ -104,3 +104,9 @@ variable "redrive_policy_max_receiver_count" {
   description = "The number of times a message is delivered to the source queue before being moved to the dead-letter queue. When the ReceiveCount for a message exceeds the maxReceiveCount for a queue, Amazon SQS moves the message to the dead-letter-queue."
   default     = 5
 }
+
+variable "redrive_policy" {
+  type        = string
+  description = "The SNS redrive policy as JSON. This overrides the deadLetterTargetArn passed by the module."
+  default     = null
+}
