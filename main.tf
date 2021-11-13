@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 locals {
   enabled = module.this.enabled
 
@@ -27,8 +25,10 @@ resource "aws_sns_topic_subscription" "this" {
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
   raw_message_delivery   = var.subscribers[each.key].raw_message_delivery
-  # TODO enable when PR gets merged https://github.com/terraform-providers/terraform-provider-aws/issues/10931
-  # redrive_policy        = length(aws_sqs_queue.dead_letter_queue.*) > 0 ? "{\"deadLetterTargetArn\": \"${join("", aws_sqs_queue.dead_letter_queue.*.arn)}\"}" : null
+  redrive_policy = var.sqs_dlq_enabled ? jsonencode({
+    deadLetterTargetArn = join("", aws_sqs_queue.dead_letter_queue.*.arn)
+    maxReceiveCount     = var.redrive_policy_max_receiver_count
+  }) : null
 }
 
 resource "aws_sns_topic_policy" "this" {
@@ -79,7 +79,15 @@ resource "aws_sqs_queue" "dead_letter_queue" {
   tags = module.this.tags
 }
 
-data "aws_iam_policy_document" "sqs-queue-policy" {
+resource "aws_sqs_queue_policy" "default" {
+  count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
+
+  queue_url = aws_sqs_queue.dead_letter_queue.*.id
+
+  policy = data.aws_iam_policy_document.sqs_queue_policy.json
+}
+
+data "aws_iam_policy_document" "sqs_queue_policy" {
   count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
 
   policy_id = "${join("", aws_sqs_queue.dead_letter_queue.*.arn)}/SNSDeadLetterQueue"
