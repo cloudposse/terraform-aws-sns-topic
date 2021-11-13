@@ -19,7 +19,9 @@ resource "aws_sns_topic" "this" {
   fifo_topic                  = var.fifo_topic
   content_based_deduplication = var.content_based_deduplication
 
-  tags = module.this.tags
+  tags = merge(module.this.tags,
+    Name = local.sns_topic_name
+  )
 }
 
 resource "aws_sns_topic_subscription" "this" {
@@ -81,7 +83,9 @@ resource "aws_sqs_queue" "dead_letter_queue" {
   kms_master_key_id                 = var.sqs_queue_kms_master_key_id
   kms_data_key_reuse_period_seconds = var.sqs_queue_kms_data_key_reuse_period_seconds
 
-  tags = module.this.tags
+  tags = merge(module.this.tags,
+    Name = local.sqs_queue_name
+  )
 }
 
 resource "aws_sqs_queue_policy" "default" {
@@ -89,7 +93,7 @@ resource "aws_sqs_queue_policy" "default" {
 
   queue_url = aws_sqs_queue.dead_letter_queue.*.id
 
-  policy = data.aws_iam_policy_document.sqs_queue_policy.json
+  policy = join("", data.aws_iam_policy_document.sqs_queue_policy.*.json)
 }
 
 data "aws_iam_policy_document" "sqs_queue_policy" {
