@@ -2,12 +2,15 @@ locals {
   enabled = module.this.enabled
 
   kms_key_id = local.enabled && var.encryption_enabled && var.kms_master_key_id != "" ? var.kms_master_key_id : ""
+
+  sns_topic_name = var.fifo_topic ? "${module.this.id}.fifo" : module.this.id
+  sqs_queue_name = var.fifo_queue ? "${module.this.id}.fifo" : module.this.id
 }
 
 resource "aws_sns_topic" "this" {
   count = local.enabled ? 1 : 0
 
-  name                        = var.fifo_topic ? "${module.this.id}.fifo" : module.this.id
+  name                        = local.sns_topic_name
   display_name                = replace(module.this.id, ".", "-") # dots are illegal in display names and for .fifo topics required as part of the name (AWS SNS by design)
   kms_master_key_id           = local.kms_key_id
   delivery_policy             = var.delivery_policy
@@ -69,7 +72,7 @@ data "aws_iam_policy_document" "aws_sns_topic_policy" {
 resource "aws_sqs_queue" "dead_letter_queue" {
   count = local.enabled && var.sqs_dlq_enabled ? 1 : 0
 
-  name                              = var.fifo_queue ? "${module.this.id}.fifo" : module.this.id
+  name                              = local.sqs_queue_name
   fifo_queue                        = var.fifo_queue
   max_message_size                  = var.sqs_dlq_max_message_size
   message_retention_seconds         = var.sqs_dlq_message_retention_seconds
