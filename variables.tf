@@ -68,6 +68,7 @@ variable "sqs_dlq_max_message_size" {
   description = "The limit of how many bytes a message can contain before Amazon SQS rejects it. An integer from 1024 bytes (1 KiB) up to 262144 bytes (256 KiB). The default for this attribute is 262144 (256 KiB)."
   default     = 262144
 }
+
 variable "sqs_dlq_message_retention_seconds" {
   type        = number
   description = "The number of seconds Amazon SQS retains a message. Integer representing seconds, from 60 (1 minute) to 1209600 (14 days)."
@@ -86,8 +87,26 @@ variable "fifo_topic" {
   default     = false
 }
 
+variable "fifo_queue_enabled" {
+  type        = bool
+  description = "Whether or not to create a FIFO (first-in-first-out) queue"
+  default     = false
+}
+
 variable "content_based_deduplication" {
   type        = bool
   description = "Enable content-based deduplication for FIFO topics"
   default     = false
+}
+
+variable "redrive_policy_max_receiver_count" {
+  type        = number
+  description = "The number of times a message is delivered to the source queue before being moved to the dead-letter queue. When the ReceiveCount for a message exceeds the maxReceiveCount for a queue, Amazon SQS moves the message to the dead-letter-queue."
+  default     = 5
+}
+
+variable "redrive_policy" {
+  type        = string
+  description = "The SNS redrive policy as JSON. This overrides `var.redrive_policy_max_receiver_count` and the `deadLetterTargetArn` (supplied by `var.fifo_queue = true`) passed in by the module."
+  default     = null
 }

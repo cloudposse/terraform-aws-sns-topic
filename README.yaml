@@ -62,7 +62,9 @@ usage: |-
 examples: |-
   ```hcl
   module "sns" {
-    source = "git::https://github.com/cloudposse/terraform-aws-sns-topic.git?ref=0.0.1"
+    source = "cloudposse/sns-topic/aws"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version     = "x.x.x"
 
     attributes = var.attributes
     name       = var.name
@@ -119,4 +121,6 @@ related:
 contributors:
   - name: "Marcin Brański"
     github: "3h4x"
+  - name: "RB"
+    github: "nitrocode"
  
