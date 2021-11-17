@@ -4,7 +4,7 @@ locals {
   kms_key_id = local.enabled && var.encryption_enabled && var.kms_master_key_id != "" ? var.kms_master_key_id : ""
 
   sns_topic_name = var.fifo_topic ? "${module.this.id}.fifo" : module.this.id
-  sqs_queue_name = var.fifo_queue ? "${module.this.id}.fifo" : module.this.id
+  sqs_queue_name = var.fifo_queue_enabled ? "${module.this.id}.fifo" : module.this.id
 
   sqs_dlq_enabled = local.enabled && var.sqs_dlq_enabled
 }
