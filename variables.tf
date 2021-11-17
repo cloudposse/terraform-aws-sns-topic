@@ -87,7 +87,7 @@ variable "fifo_topic" {
   default     = false
 }
 
-variable "fifo_queue" {
+variable "fifo_queue_enabled" {
   type        = bool
   description = "Whether or not to create a FIFO (first-in-first-out) queue"
   default     = false
