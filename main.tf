@@ -77,7 +77,7 @@ resource "aws_sqs_queue" "dead_letter_queue" {
   count = local.sqs_dlq_enabled ? 1 : 0
 
   name                              = local.sqs_queue_name
-  fifo_queue                        = var.fifo_queue
+  fifo_queue                        = var.fifo_queue_enabled
   max_message_size                  = var.sqs_dlq_max_message_size
   message_retention_seconds         = var.sqs_dlq_message_retention_seconds
   kms_master_key_id                 = var.sqs_queue_kms_master_key_id
