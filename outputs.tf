@@ -29,21 +29,21 @@ output "aws_sns_topic_subscriptions" {
 }
 
 output "dead_letter_queue_url" {
-  description = "The URL for the created Amazon SQS queue."
+  description = "The URL for the created dead letter SQS queue."
   value       = local.sqs_dlq_enabled ? aws_sqs_queue.dead_letter_queue[0].url : null
 }
 
 output "dead_letter_queue_id" {
-  description = "The ID for the created Amazon SQS queue. Same as the URL."
+  description = "The ID for the created dead letter queue. Same as the URL."
   value       = local.sqs_dlq_enabled ? aws_sqs_queue.dead_letter_queue[0].id : null
 }
 
 output "dead_letter_queue_name" {
-  description = "The name for the created Amazon SQS queue."
+  description = "The name for the created dead letter queue."
   value       = local.sqs_dlq_enabled ? local.sqs_queue_name : null
 }
 
 output "dead_letter_queue_arn" {
-  description = "The ARN of the SQS queue"
+  description = "The ARN of the dead letter queue"
   value       = local.sqs_dlq_enabled ? aws_sqs_queue.dead_letter_queue[0].arn : null
 }
