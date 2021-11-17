@@ -228,16 +228,16 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
-| <a name="output_aws_sns_topic_subscriptions"></a> [aws\_sns\_topic\_subscriptions](#output\_aws\_sns\_topic\_subscriptions) | SNS topic subscription |
-| <a name="output_dead_letter_queue_arn"></a> [dead\_letter\_queue\_arn](#output\_dead\_letter\_queue\_arn) | The ARN of the dead letter queue |
+| <a name="output_aws_sns_topic_subscriptions"></a> [aws\_sns\_topic\_subscriptions](#output\_aws\_sns\_topic\_subscriptions) | SNS topic subscription. |
+| <a name="output_dead_letter_queue_arn"></a> [dead\_letter\_queue\_arn](#output\_dead\_letter\_queue\_arn) | The ARN of the dead letter queue. |
 | <a name="output_dead_letter_queue_id"></a> [dead\_letter\_queue\_id](#output\_dead\_letter\_queue\_id) | The ID for the created dead letter queue. Same as the URL. |
 | <a name="output_dead_letter_queue_name"></a> [dead\_letter\_queue\_name](#output\_dead\_letter\_queue\_name) | The name for the created dead letter queue. |
 | <a name="output_dead_letter_queue_url"></a> [dead\_letter\_queue\_url](#output\_dead\_letter\_queue\_url) | The URL for the created dead letter SQS queue. |
-| <a name="output_sns_topic"></a> [sns\_topic](#output\_sns\_topic) | SNS topic |
-| <a name="output_sns_topic_arn"></a> [sns\_topic\_arn](#output\_sns\_topic\_arn) | SNS topic ARN |
-| <a name="output_sns_topic_id"></a> [sns\_topic\_id](#output\_sns\_topic\_id) | SNS topic ID |
-| <a name="output_sns_topic_name"></a> [sns\_topic\_name](#output\_sns\_topic\_name) | SNS topic name |
-| <a name="output_sns_topic_owner"></a> [sns\_topic\_owner](#output\_sns\_topic\_owner) | SNS topic owner |
+| <a name="output_sns_topic"></a> [sns\_topic](#output\_sns\_topic) | SNS topic. |
+| <a name="output_sns_topic_arn"></a> [sns\_topic\_arn](#output\_sns\_topic\_arn) | SNS topic ARN. |
+| <a name="output_sns_topic_id"></a> [sns\_topic\_id](#output\_sns\_topic\_id) | SNS topic ID. |
+| <a name="output_sns_topic_name"></a> [sns\_topic\_name](#output\_sns\_topic\_name) | SNS topic name. |
+| <a name="output_sns_topic_owner"></a> [sns\_topic\_owner](#output\_sns\_topic\_owner) | SNS topic owner. |
 <!-- markdownlint-restore -->
 
 
