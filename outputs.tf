@@ -24,7 +24,7 @@ output "sns_topic_owner" {
 }
 
 output "aws_sns_topic_subscriptions" {
-  value       = local.enabled ? aws_sns_topic_subscription.this[0] : null
+  value       = local.enabled ? aws_sns_topic_subscription.this : null
   description = "SNS topic subscription."
 }
 
