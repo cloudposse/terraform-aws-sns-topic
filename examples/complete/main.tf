@@ -5,11 +5,11 @@ provider "aws" {
 module "sns" {
   source = "../../"
 
-  # allowed_aws_services_for_sns_published = var.allowed_aws_services_for_sns_published
+  allowed_aws_services_for_sns_published = var.allowed_aws_services_for_sns_published
 
-  sqs_dlq_enabled    = false
-  fifo_topic         = false
-  fifo_queue_enabled = false
+  sqs_dlq_enabled    = true
+  fifo_topic         = true
+  fifo_queue_enabled = true
 
   context = module.this.context
 }
