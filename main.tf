@@ -8,7 +8,7 @@ locals {
 
   sqs_dlq_enabled = local.enabled && var.sqs_dlq_enabled
 
-  sns_queue_policy_enabled = local.enabled && length(var.allowed_aws_services_for_sns_published) > 0 || length(var.allowed_iam_arns_for_sns_publish) > 0
+  sns_topic_policy_enabled = local.enabled && length(var.allowed_aws_services_for_sns_published) > 0 || length(var.allowed_iam_arns_for_sns_publish) > 0
 }
 
 resource "aws_sns_topic" "this" {
@@ -41,14 +41,14 @@ resource "aws_sns_topic_subscription" "this" {
 }
 
 resource "aws_sns_topic_policy" "this" {
-  count = local.sns_queue_policy_enabled ? 1 : 0
+  count = local.sns_topic_policy_enabled ? 1 : 0
 
   arn    = join("", aws_sns_topic.this.*.arn)
   policy = length(var.sns_topic_policy_json) > 0 ? var.sns_topic_policy_json : join("", data.aws_iam_policy_document.aws_sns_topic_policy.*.json)
 }
 
 data "aws_iam_policy_document" "aws_sns_topic_policy" {
-  count = local.sns_queue_policy_enabled ? 1 : 0
+  count = local.sns_topic_policy_enabled ? 1 : 0
 
   policy_id = "SNSTopicsPub"
   statement {
