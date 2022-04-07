@@ -8,6 +8,8 @@ variable "subscribers" {
     # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)
     raw_message_delivery = bool
     # Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property) (default is false)
+    confirmation_timeout_in_minutes = number
+    # Integer indicating number of minutes to wait in retrying mode for fetching subscription arn before marking it as failure. Only applicable for http and https protocols. 
   }))
   description = "Required configuration for subscibres to SNS topic."
   default     = {}
