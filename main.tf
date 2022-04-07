@@ -38,6 +38,7 @@ resource "aws_sns_topic_subscription" "this" {
     deadLetterTargetArn = join("", aws_sqs_queue.dead_letter_queue.*.arn)
     maxReceiveCount     = var.redrive_policy_max_receiver_count
   })) : null
+  confirmation_timeout_in_minutes = var.subscribers[each.key].confirmation_timeout_in_minutes
 }
 
 resource "aws_sns_topic_policy" "this" {
