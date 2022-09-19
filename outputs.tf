@@ -4,7 +4,7 @@ output "sns_topic" {
 }
 
 output "sns_topic_name" {
-  value       = local.enabled ? local.sqs_queue_name : null
+  value       = local.enabled ? local.sns_topic_name : null
   description = "SNS topic name."
 }
 
