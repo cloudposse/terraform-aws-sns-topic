@@ -23,8 +23,9 @@ module "sns" {
     sqs => {
       protocol               = "sqs"
       endpoint               = aws_sqs_queue.default[sqs].arn
+      filter_policy          = jsonencode({ "foo" = ["bar"] })
       raw_message_delivery   = true
-      endpoint_auto_confirms = false
+      endpoint_auto_confirms = true
     }
   }
 

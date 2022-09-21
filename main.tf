@@ -33,6 +33,7 @@ resource "aws_sns_topic_subscription" "this" {
   protocol               = var.subscribers[each.key].protocol
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
+  filter_policy          = var.subscribers[each.key].filter_policy
   raw_message_delivery   = var.subscribers[each.key].raw_message_delivery
   redrive_policy = var.sqs_dlq_enabled ? coalesce(var.redrive_policy, jsonencode(
     {

@@ -8,6 +8,8 @@ variable "subscribers" {
     # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)
     raw_message_delivery = bool
     # Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property) (default is false)
+    filter_policy = string
+    # (Optional) JSON String with the filter policy that will be used in the subscription to filter messages seen by the target resource.
   }))
   description = "Required configuration for subscibres to SNS topic."
   default     = {}
