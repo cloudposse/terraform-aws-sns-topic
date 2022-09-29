@@ -8,7 +8,7 @@ locals {
 
   sqs_dlq_enabled = local.enabled && var.sqs_dlq_enabled
 
-  sns_topic_policy_enabled = local.enabled && length(var.allowed_aws_services_for_sns_published) > 0 || length(var.allowed_iam_arns_for_sns_publish) > 0 || length(var.sns_topic_policy_json) > 0
+  sns_topic_policy_enabled = local.enabled && (length(var.allowed_aws_services_for_sns_published) > 0 || length(var.allowed_iam_arns_for_sns_publish) > 0 || length(var.sns_topic_policy_json) > 0)
 }
 
 resource "aws_sns_topic" "this" {
