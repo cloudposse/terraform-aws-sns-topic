@@ -1,0 +1,46 @@
+name: tfsec
+on:
+  pull_request:
+    branches:
+      - dwc/tfsec
+jobs:
+  kics-job:
+    name: kics-action
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Mkdir results-dir
+        # make sure results dir is created
+        run: mkdir -p results-dir
+      - name: Create config file
+        # creating a heredoc config file
+        run: |
+          cat <<EOF >>kics.config
+          {
+            "log-file": true,
+            "minimal-ui": false,
+            "no-color": false,
+            "no-progress": true,
+            "output-name": "results.json",
+            "output-path": "./results-dir",
+            "payload-path": "file path to store source internal representation in JSON format",
+            "preview-lines": 5,
+            "report-formats": "json,sarif",
+            "type": "terraform",
+            "verbose": true,
+            "ignore-on-exit": "results",
+            "path": "./deployments, ./modules",
+            "enable-comment": true
+            }
+          EOF
+      - name: Run KICS Scan using config
+        uses: checkmarx/kics-github-action@v1.6
+        with: 
+          path: "./"
+          config_path: ./kics.config
+          token: ${{ secrets.VERACODE_PAT }}
+      - name: display kics results
+        run: |
+          cat ./results.json
