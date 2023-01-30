@@ -1,6 +1,6 @@
 name: tfsec
 on:
-  pull_request:
+  push:
     branches:
       - dwc/tfsec
 jobs:
