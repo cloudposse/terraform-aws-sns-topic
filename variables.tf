@@ -49,6 +49,12 @@ variable "allowed_iam_arns_for_sns_publish" {
   default     = []
 }
 
+variable "sns_topic_name" {
+  type        = string
+  description = "The name of sns topic"
+  default     = ""
+}
+
 variable "sns_topic_policy_json" {
   type        = string
   description = "The fully-formed AWS policy as JSON"
