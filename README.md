@@ -67,8 +67,6 @@ This module provides:
 - SNS topic subscriptions
 
 It's possible to subscribe SQS as Dead Letter Queue.
-**Unfortunately** `redrive_policy` is not yet available in `terraform`. It's waiting for PR https://github.com/terraform-providers/terraform-provider-aws/pull/11770
-Without `redrive_policy` it's impossible to configure DLQ.
 
 
 ## Security & Compliance [<img src="https://cloudposse.com/wp-content/uploads/2020/11/bridgecrew.svg" width="250" align="right" />](https://bridgecrew.io/)
@@ -403,7 +401,7 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
-
+<!-- markdownlint-disable -->
   [logo]: https://cloudposse.com/logo-300x69.svg
   [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-sns-topic&utm_content=docs
   [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-sns-topic&utm_content=website
@@ -434,3 +432,4 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-aws-sns-topic
   [share_email]: mailto:?subject=terraform-aws-sns-topic&body=https://github.com/cloudposse/terraform-aws-sns-topic
   [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-aws-sns-topic?pixel&cs=github&cm=readme&an=terraform-aws-sns-topic
+<!-- markdownlint-restore -->
