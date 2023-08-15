@@ -21,6 +21,10 @@ resource "aws_sns_topic" "this" {
   fifo_topic                  = var.fifo_topic
   content_based_deduplication = var.content_based_deduplication
 
+  sqs_failure_feedback_role_arn    = try(var.sqs_feedback.failure_role_arn, null)
+  sqs_success_feedback_role_arn    = try(var.sqs_feedback.success_role_arn, null)
+  sqs_success_feedback_sample_rate = try(var.sqs_feedback.success_sample_rate, null)
+
   tags = merge(module.this.tags, {
     Name = local.sns_topic_name
   })

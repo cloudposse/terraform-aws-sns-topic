@@ -112,3 +112,15 @@ variable "redrive_policy" {
   description = "The SNS redrive policy as JSON. This overrides `var.redrive_policy_max_receiver_count` and the `deadLetterTargetArn` (supplied by `var.fifo_queue = true`) passed in by the module."
   default     = null
 }
+
+variable "sqs_feedback" {
+  description = "Map of IAM role ARNs and sample rate for success and failure feedback"
+  type        = map(string)
+  default     = {}
+  # Example:
+  # application_feedback = {
+  #   failure_role_arn = "arn:aws:iam::11111111111:role/failure"
+  #   success_role_arn = "arn:aws:iam::11111111111:role/success"
+  #   success_sample_rate = 75
+  # }
+}
