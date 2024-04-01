@@ -1,0 +1,7 @@
+# Upstream changes from _extends are only recognized when modifications are made to this file in the default branch.
+_extends: .github
+repository:
+  name: terraform-aws-sns-topic
+  description: Terraform Module to Provide an Amazon Simple Notification Service (SNS)
+  homepage: https://cloudposse.com/accelerate
+  topics: terraform, terraform-module, aws, sns, sns-topic, aws-sns
