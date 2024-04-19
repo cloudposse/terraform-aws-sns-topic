@@ -4,5 +4,5 @@ go 1.15
 
 require (
 	github.com/gruntwork-io/terratest v0.31.4
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/net v0.23.0 // indirect
 )
