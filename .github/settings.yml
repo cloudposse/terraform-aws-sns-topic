@@ -5,3 +5,4 @@ repository:
   description: Terraform Module to Provide an Amazon Simple Notification Service (SNS)
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-module, aws, sns, sns-topic, aws-sns
+
