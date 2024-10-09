@@ -29,7 +29,7 @@ resource "aws_sns_topic" "this" {
 resource "aws_sns_topic_subscription" "this" {
   for_each = local.enabled ? var.subscribers : {}
 
-  topic_arn              = join("", aws_sns_topic.this.*.arn)
+  topic_arn              = join("", aws_sns_topic.this[*].arn)
   protocol               = var.subscribers[each.key].protocol
   endpoint               = var.subscribers[each.key].endpoint
   endpoint_auto_confirms = var.subscribers[each.key].endpoint_auto_confirms
@@ -37,7 +37,7 @@ resource "aws_sns_topic_subscription" "this" {
   filter_policy_scope    = var.subscribers[each.key].filter_policy_scope
   raw_message_delivery   = var.subscribers[each.key].raw_message_delivery
   redrive_policy = var.sqs_dlq_enabled ? coalesce(var.redrive_policy, jsonencode({
-    deadLetterTargetArn = join("", aws_sqs_queue.dead_letter_queue.*.arn)
+    deadLetterTargetArn = join("", aws_sqs_queue.dead_letter_queue[*].arn)
     maxReceiveCount     = var.redrive_policy_max_receiver_count
   })) : null
 }
