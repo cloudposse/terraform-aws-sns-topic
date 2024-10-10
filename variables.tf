@@ -8,8 +8,8 @@ variable "subscribers" {
     # Boolean indicating whether the end point is capable of auto confirming subscription e.g., PagerDuty (default is false)
     filter_policy = optional(string, null)
     # The filter policy JSON that is assigned to the subscription. For more information, see Amazon SNS Filter Policies.
-    filter_policy_scope = optional(string, "MessageAttributes")
-    # The filter policy scope that is assigned to the subscription. Whether the `filter_policy` applies to `MessageAttributes` (default) or `MessageBody`
+    filter_policy_scope = optional(string, null)
+    # The filter policy scope that is assigned to the subscription. Whether the `filter_policy` applies to `MessageAttributes` or `MessageBody`. Default is null.
     raw_message_delivery = optional(bool, false)
     # Boolean indicating whether or not to enable raw message delivery (the original message is directly passed, not wrapped in JSON with the original message in the message property) (default is false)
   }))
