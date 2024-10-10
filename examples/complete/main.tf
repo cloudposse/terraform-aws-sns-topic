@@ -15,7 +15,7 @@ module "sns" {
 }
 
 resource "aws_sqs_queue" "sqs" {
-  name = "test-sqs"
+  name       = "test-sqs"
   fifo_queue = false
 }
 
@@ -26,11 +26,11 @@ module "sns_with_subscriber" {
 
   subscribers = {
     "sqs" = {
-      protocol = "sqs"
-      endpoint = aws_sqs_queue.sqs.arn
+      protocol             = "sqs"
+      endpoint             = aws_sqs_queue.sqs.arn
       raw_message_delivery = true
     }
   }
-  context = module.this.context
+  context    = module.this.context
   attributes = ["sqs", "subscriber"]
 }
