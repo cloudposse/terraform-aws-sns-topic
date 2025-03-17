@@ -21,6 +21,22 @@ resource "aws_sns_topic" "this" {
   fifo_topic                  = var.fifo_topic
   content_based_deduplication = var.content_based_deduplication
 
+  application_failure_feedback_role_arn    = try(var.delivery_status.application.failure_role_arn, null)
+  application_success_feedback_role_arn    = try(var.delivery_status.application.success_role_arn, null)
+  application_success_feedback_sample_rate = try(var.delivery_status.application.success_sample_rate, null)
+  firehose_failure_feedback_role_arn       = try(var.delivery_status.firehose.failure_role_arn, null)
+  firehose_success_feedback_role_arn       = try(var.delivery_status.firehose.success_role_arn, null)
+  firehose_success_feedback_sample_rate    = try(var.delivery_status.firehose.success_sample_rate, null)
+  http_failure_feedback_role_arn           = try(var.delivery_status.http.failure_role_arn, null)
+  http_success_feedback_role_arn           = try(var.delivery_status.http.success_role_arn, null)
+  http_success_feedback_sample_rate        = try(var.delivery_status.http.success_sample_rate, null)
+  lambda_failure_feedback_role_arn         = try(var.delivery_status.lambda.failure_role_arn, null)
+  lambda_success_feedback_role_arn         = try(var.delivery_status.lambda.success_role_arn, null)
+  lambda_success_feedback_sample_rate      = try(var.delivery_status.lambda.success_sample_rate, null)
+  sqs_failure_feedback_role_arn            = try(var.delivery_status.sqs.failure_role_arn, null)
+  sqs_success_feedback_role_arn            = try(var.delivery_status.sqs.success_role_arn, null)
+  sqs_success_feedback_sample_rate         = try(var.delivery_status.sqs.success_sample_rate, null)
+
   tags = merge(module.this.tags, {
     Name = local.sns_topic_name
   })
