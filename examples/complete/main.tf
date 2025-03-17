@@ -80,7 +80,7 @@ resource "aws_iam_role" "this" {
     ]
   })
 
-  tags = module.this.tags_all
+  tags = module.this.tags
 }
 
 resource "aws_iam_role_policy" "this" {
