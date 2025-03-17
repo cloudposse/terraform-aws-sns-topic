@@ -118,31 +118,31 @@ variable "delivery_status" {
     successfully delivered messages.
   EOT
   type = object({
-    application = object({
+    application = optional(object({
       success_role_arn    = string
       failure_role_arn    = string
       success_sample_rate = number
-    })
-    firehose = object({
+    }))
+    firehose = optional(object({
       success_role_arn    = string
       failure_role_arn    = string
       success_sample_rate = number
-    })
-    http = object({
+    }))
+    http = optional(object({
       success_role_arn    = string
       failure_role_arn    = string
       success_sample_rate = number
-    })
-    lambda = object({
+    }))
+    lambda = optional(object({
       success_role_arn    = string
       failure_role_arn    = string
       success_sample_rate = number
-    })
-    sqs = object({
+    }))
+    sqs = optional(object({
       success_role_arn    = string
       failure_role_arn    = string
       success_sample_rate = number
-    })
+    }))
   })
   default = {}
 }
