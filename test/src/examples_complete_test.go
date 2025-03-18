@@ -34,6 +34,7 @@ func TestExamplesComplete(t *testing.T) {
 		Vars: map[string]interface{}{
 			"name": testName,
 		},
+		SetVarsAfterVarFiles: true,
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
