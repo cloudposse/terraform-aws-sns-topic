@@ -108,3 +108,41 @@ variable "redrive_policy" {
   description = "The SNS redrive policy as JSON. This overrides the `deadLetterTargetArn` (supplied by `var.fifo_queue = true`) passed in by the module."
   default     = null
 }
+
+variable "delivery_status" {
+  description = <<-EOT
+    Enable Message delivery status for the various SNS subscription endpoints.
+    The success_role_arn and failure_role_arn arguments are used to give Amazon SNS write
+    access to use CloudWatch Logs on your behalf.
+    The success_sample_rate argument is for specifying the sample rate percentage (0-100) of
+    successfully delivered messages.
+  EOT
+  type = object({
+    application = optional(object({
+      success_role_arn    = string
+      failure_role_arn    = string
+      success_sample_rate = number
+    }))
+    firehose = optional(object({
+      success_role_arn    = string
+      failure_role_arn    = string
+      success_sample_rate = number
+    }))
+    http = optional(object({
+      success_role_arn    = string
+      failure_role_arn    = string
+      success_sample_rate = number
+    }))
+    lambda = optional(object({
+      success_role_arn    = string
+      failure_role_arn    = string
+      success_sample_rate = number
+    }))
+    sqs = optional(object({
+      success_role_arn    = string
+      failure_role_arn    = string
+      success_sample_rate = number
+    }))
+  })
+  default = {}
+}
