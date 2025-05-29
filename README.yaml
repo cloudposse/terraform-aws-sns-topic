@@ -36,7 +36,7 @@ badges:
     url: https://github.com/cloudposse/terraform-aws-sns-topic/commits
   - name: Slack Community
     image: https://slack.cloudposse.com/for-the-badge.svg
-    url: https://slack.cloudposse.com
+    url: https://cloudposse.com/slack
 description: |-
   Terraform module to provision SNS topic
 
@@ -82,10 +82,7 @@ examples: |-
   ```
 
 # Other files to include in this README from the project folder
-include:
-  - "docs/targets.md"
-  - "docs/terraform.md"
-
+include: []
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
