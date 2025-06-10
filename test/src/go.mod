@@ -1,8 +1,8 @@
 module github.com/cloudposse/terraform-aws-sns-topic/test
 
-go 1.21.1
+go 1.24
 
-toolchain go1.24.1
+toolchain go1.24.0
 
 require github.com/gruntwork-io/terratest v0.48.2
 
